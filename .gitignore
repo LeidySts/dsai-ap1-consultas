@@ -1,0 +1,27 @@
+# segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# node / front
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+
+# sistema / editor
+.DS_Store
+.idea/
+.vscode/
