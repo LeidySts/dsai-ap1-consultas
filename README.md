@@ -20,8 +20,8 @@ Apoiado por IA (UFPA, 2026.4, Prof. Gustavo Pinto).
 ## 👥 Dupla
 | Nome | GitHub |
 |---|---|
-| PREENCHER | @PREENCHER |
-| PREENCHER | @PREENCHER |
+| LEIDIANE SANTOS DOS SANTOS | @LeidySts |
+| DIDIMO LUAN | @DLuanNeves |
 
 ## 🧱 Stack
 - **Backend:** Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL, pytest
