@@ -5,17 +5,17 @@ Spec-Driven Development (spec → plan → tasks). Atividade Prática 1 de Desen
 Apoiado por IA (UFPA, 2026.4, Prof. Gustavo Pinto).
 
 ## 🔗 Aplicação publicada
-**URL:** <https://PREENCHER.onrender.com>
+**URL:** <https://marcaconsulta.onrender.com>
 
 > Se o serviço estiver "dormindo" (plano gratuito), o primeiro acesso pode levar até 1 minuto.
 
 ### Usuários de demonstração
 | Perfil | E-mail | Senha |
 |---|---|---|
-| Paciente | paciente@demo.com | PREENCHER |
-| Profissional | medico@demo.com | PREENCHER |
-| Recepção | recepcao@demo.com | PREENCHER |
-| Administrador | admin@demo.com | PREENCHER |
+| Paciente | paciente@demo.com | demo1234 |
+| Profissional | medico@demo.com | demo1234 |
+| Recepção | recepcao@demo.com | demo1234 |
+| Administrador | admin@demo.com | demo1234 |
 
 ## 👥 Dupla
 | Nome | GitHub |
@@ -26,7 +26,7 @@ Apoiado por IA (UFPA, 2026.4, Prof. Gustavo Pinto).
 ## 🧱 Stack
 - **Backend:** Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL, pytest
 - **Frontend:** React 18, TypeScript, Vite, React Router, TanStack Query, Vitest
-- **Publicação:** Docker em PREENCHER (Render/Railway) + PostgreSQL gerenciado
+- **Publicação:** Docker no Render (`render.yaml`) + PostgreSQL gerenciado do Render
 
 ## ▶️ Como rodar localmente
 ```bash
@@ -37,7 +37,8 @@ alembic upgrade head && python -m app.seed
 uvicorn app.main:app --reload     # API em http://localhost:8000
 cd ../frontend && npm install && npm run dev   # front em http://localhost:5173
 ```
-Testes: `pytest` (backend) e `npm test` (frontend).
+Testes: `pip install -r src/backend/requirements-dev.txt`, depois `pytest` (backend) e `npm test` (frontend), na raiz.
+Sem `TEST_DATABASE_URL`, os testes do backend sobem um PostgreSQL embutido (`pgserver`).
 
 ## 📐 Specs
 Uma spec por parte do sistema, datada, em [`SPEC/`](SPEC/). Comece por
