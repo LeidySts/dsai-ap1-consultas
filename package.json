@@ -1,0 +1,8 @@
+{
+  "name": "marcaconsulta",
+  "private": true,
+  "scripts": {
+    "test": "npm --prefix src/frontend test",
+    "build": "npm --prefix src/frontend run build"
+  }
+}
