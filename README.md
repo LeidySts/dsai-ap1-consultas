@@ -48,7 +48,7 @@ Uma spec por parte do sistema, datada, em [`SPEC/`](SPEC/). Comece por
 | Ferramenta | Modelo | Usada para |
 |---|---|---|
 | Claude (claude.ai) | Claude Opus 5.5 | Leitura da atividade, rascunho das specs, README e AGENTS.md |
-| PREENCHER (ex.: Claude Code) | PREENCHER (ex.: claude-sonnet-5-5) | Implementação |
+| Claude Code | claude-opus-5-5 | Plano, tarefas, implementação, testes e deploy |
 
 Todas as sessões, do primeiro ao último prompt, estão em [`prompts/sessoes/`](prompts/sessoes/)
 (exportações brutas, nome `AAAA-MM-DD-HHMM-<ferramenta>.<ext>`).
@@ -56,7 +56,7 @@ Todas as sessões, do primeiro ao último prompt, estão em [`prompts/sessoes/`]
 ## 📊 Números
 | | |
 |---|---|
-| Specs | PREENCHER |
+| Specs | 12 (+ 1 plano e 1 lista de tarefas datados) |
 | Sessões | PREENCHER |
 | Prompts | PREENCHER |
 | Horas | PREENCHER |
@@ -72,15 +72,48 @@ cloc . --vcs=git \
 
 ### Total
 ```
-COLE AQUI A SAÍDA DO COMANDO ACIMA
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Python                          48            911             99           3094
+TypeScript                      34            146             10           1973
+CSS                              1              0              0             61
+INI                              2              8              0             31
+Mako                             1              6              0             16
+Dockerfile                       1              1              2             15
+HTML                             1              0              0             12
+Bourne Shell                     1              0              1              7
+-------------------------------------------------------------------------------
+SUM:                            89           1072            112           5209
+-------------------------------------------------------------------------------
 ```
 
 ### Só testes
 ```
-COLE AQUI A SAÍDA DO MESMO COMANDO RODADO EM tests/ (e nos testes do frontend)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Python                          14            325             24            928
+TypeScript                       9             36              1            466
+-------------------------------------------------------------------------------
+SUM:                            23            361             25           1394
+-------------------------------------------------------------------------------
 ```
 
 ### Sem testes
 ```
-COLE AQUI A SAÍDA DO MESMO COMANDO COM --exclude-dir=...,tests
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Python                          34            586             75           2166
+TypeScript                      25            110              9           1507
+CSS                              1              0              0             61
+INI                              2              8              0             31
+Mako                             1              6              0             16
+Dockerfile                       1              1              2             15
+HTML                             1              0              0             12
+Bourne Shell                     1              0              1              7
+-------------------------------------------------------------------------------
+SUM:                            66            711             87           3815
+-------------------------------------------------------------------------------
 ```
