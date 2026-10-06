@@ -41,8 +41,8 @@ def criar_access_token(usuario_id: int, perfil: str) -> str:
 
 def ler_access_token(token: str) -> dict:
     try:
-        # a expiração é conferida com o relógio da aplicação (controlável nos testes)
-        dados = jwt.decode(token, get_settings().jwt_secret, algorithms=["HS256"], options={"verify_exp": False})
+        # exp e iat são conferidos com o relógio da aplicação (controlável nos testes)
+        dados = jwt.decode(token, get_settings().jwt_secret, algorithms=["HS256"], options={"verify_exp": False, "verify_iat": False})
     except jwt.PyJWTError as exc:
         raise NaoAutenticado("Sessão inválida. Entre novamente.") from exc
     if dados.get("tipo") != "access" or dados["exp"] <= agora_utc().timestamp():
