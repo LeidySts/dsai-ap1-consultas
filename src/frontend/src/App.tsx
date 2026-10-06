@@ -8,6 +8,10 @@ import Cadastro from "@/features/auth/Cadastro";
 import Login from "@/features/auth/Login";
 import Home from "@/features/busca/Home";
 import ResultadosBusca from "@/features/busca/ResultadosBusca";
+import AdminEspecialidades from "@/features/clinicas/AdminEspecialidades";
+import AdminFeriados from "@/features/clinicas/AdminFeriados";
+import AdminProfissionais from "@/features/clinicas/AdminProfissionais";
+import AdminUnidades from "@/features/clinicas/AdminUnidades";
 import PaginaProfissional from "@/features/clinicas/PaginaProfissional";
 import { AuthProvider } from "@/shared/auth";
 import Layout from "@/shared/Layout";
@@ -31,6 +35,12 @@ export default function App() {
           <Route element={<RotaProtegida perfis={["profissional"]} />}>
             <Route path="/profissional/agenda" element={<AgendaProfissional />} />
             <Route path="/profissional/disponibilidade" element={<Disponibilidade />} />
+          </Route>
+          <Route element={<RotaProtegida perfis={["admin"]} />}>
+            <Route path="/admin/unidades" element={<AdminUnidades />} />
+            <Route path="/admin/especialidades" element={<AdminEspecialidades />} />
+            <Route path="/admin/profissionais" element={<AdminProfissionais />} />
+            <Route path="/admin/feriados" element={<AdminFeriados />} />
           </Route>
           <Route path="*" element={<p>Página não encontrada.</p>} />
         </Route>

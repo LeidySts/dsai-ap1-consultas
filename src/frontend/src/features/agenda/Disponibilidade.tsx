@@ -1,10 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, type FormEvent } from "react";
 import { api, ErroApi } from "@/shared/api";
-import { formatarDataHora, localParaIso } from "@/shared/datas";
+import { DIAS, formatarDataHora, localParaIso } from "@/shared/datas";
 import { useMeuCadastro } from "./useMeuCadastro";
-
-export const DIAS = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
 type Faixa = { id: number; unidade_id: number; dia_semana: number; hora_inicio: string; hora_fim: string };
 type Bloqueio = { id: number; inicio: string; fim: string; motivo: string };

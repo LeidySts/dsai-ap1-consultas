@@ -1,5 +1,8 @@
 const FUSO = "America/Sao_Paulo";
 
+/** Índice 0 = segunda ... 6 = domingo (igual ao backend). */
+export const DIAS = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+
 export function formatarDataHora(iso: string): string {
   return new Intl.DateTimeFormat("pt-BR", { timeZone: FUSO, dateStyle: "short", timeStyle: "short" }).format(new Date(iso));
 }
