@@ -19,6 +19,24 @@ export function diaLocal(iso: string): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: FUSO }).format(new Date(iso));
 }
 
+/** Soma dias a uma data AAAA-MM-DD. */
+export function somarDias(dia: string, dias: number): string {
+  const d = new Date(`${dia}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + dias);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Segunda-feira da semana de uma data AAAA-MM-DD. */
+export function inicioDaSemana(dia: string): string {
+  const semana = new Date(`${dia}T12:00:00Z`).getUTCDay(); // 0 = domingo
+  return somarDias(dia, -((semana + 6) % 7));
+}
+
+/** Valor de <input type="datetime-local"> no horário de São Paulo (UTC-3, sem horário de verão) -> ISO. */
+export function localParaIso(valor: string): string {
+  return `${valor.length === 16 ? `${valor}:00` : valor}-03:00`;
+}
+
 export function formatarPreco(centavos: number): string {
   return (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
