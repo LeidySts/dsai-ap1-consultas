@@ -111,3 +111,50 @@ def test_listagem_ordena_por_nome(client, admin, db):
     desc = [e["nome"] for e in client.get("/api/especialidades?ordem=-nome", headers=admin).json()["itens"]]
     assert asc == ["Alfa", "Beta", "Gama"] and desc == ["Gama", "Beta", "Alfa"]
     assert client.get("/api/especialidades?ordem=xyz", headers=admin).status_code == 422
+
+
+# ---------- desativação ----------
+
+def _com_consultas(db):
+    from app.agendamento.models import Consulta
+    from app.core.tempo import Relogio
+    from apoio import criar_consulta, local
+
+    Relogio.atual = local("2026-10-05 08:00")
+    uni, esp = criar_unidade(db), criar_especialidade(db)
+    prof = criar_profissional(db, especialidades=[esp], unidades=[uni])
+    paciente = criar_usuario(db)
+    passada = criar_consulta(db, paciente, prof, uni, esp.tipos[0], local("2026-09-28 09:00"), status="realizada")
+    futura = criar_consulta(db, paciente, prof, uni, esp.tipos[0], local("2026-10-12 09:00"))
+    return uni, prof, passada, futura, Consulta
+
+
+@pytest.mark.parametrize("alvo", ["unidades", "profissionais"])
+def test_desativar_com_consultas_futuras_devolve_409_com_a_lista(client, admin, db, alvo):
+    uni, prof, _, futura, _ = _com_consultas(db)
+    alvo_id = uni.id if alvo == "unidades" else prof.id
+    r = client.post(f"/api/{alvo}/{alvo_id}/desativar", headers=admin)
+    assert r.status_code == 409
+    assert [x["id"] for x in r.json()["consultas"]] == [futura.id]
+
+
+@pytest.mark.parametrize("alvo", ["unidades", "profissionais"])
+def test_desativar_sem_pendencias_mantem_consultas_passadas(client, admin, db, alvo):
+    uni, prof, passada, futura, Consulta = _com_consultas(db)
+    futura.status = "cancelada_clinica"
+    db.commit()
+    alvo_id = uni.id if alvo == "unidades" else prof.id
+    r = client.post(f"/api/{alvo}/{alvo_id}/desativar", headers=admin)
+    assert r.status_code == 200
+    assert r.json()["ativa" if alvo == "unidades" else "ativo"] is False
+    db.expire_all()
+    assert db.get(Consulta, passada.id).status == "realizada"
+
+
+def test_profissional_desativado_some_da_busca(client, admin, db):
+    _, prof, _, futura, _ = _com_consultas(db)
+    futura.status = "cancelada_clinica"
+    db.commit()
+    client.post(f"/api/profissionais/{prof.id}/desativar", headers=admin)
+    assert client.get("/api/publico/profissionais").json()["total"] == 0
+    assert client.get(f"/api/publico/profissionais/{prof.id}").status_code == 404

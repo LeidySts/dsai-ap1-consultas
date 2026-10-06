@@ -179,3 +179,44 @@ def editar_profissional(db: Session, profissional_id: int, dados: ProfissionalEd
     profissional.nome_busca = normalizar(profissional.nome)
     db.commit()
     return profissional
+
+
+# ---------- desativação ----------
+
+def _pendentes(db: Session, coluna: str, valor: int) -> list:
+    from app.agendamento.models import STATUS_ATIVOS, Consulta
+    from app.core.tempo import agora_utc
+
+    return list(db.scalars(
+        select(Consulta)
+        .where(getattr(Consulta, coluna) == valor, Consulta.status.in_(STATUS_ATIVOS), Consulta.inicio > agora_utc())
+        .order_by(Consulta.inicio)
+    ))
+
+
+def _conflito_pendentes(consultas: list, alvo: str) -> Conflito:
+    return Conflito(
+        f"{alvo} tem consultas futuras. Remarque ou cancele antes de desativar.",
+        consultas=[{"id": c.id, "inicio": c.inicio.isoformat(), "paciente": c.paciente.nome,
+                    "profissional": c.profissional.nome} for c in consultas],
+    )
+
+
+def desativar_unidade(db: Session, unidade_id: int) -> Unidade:
+    unidade = obter(db, Unidade, unidade_id, "Unidade")
+    pendentes = _pendentes(db, "unidade_id", unidade_id)
+    if pendentes:
+        raise _conflito_pendentes(pendentes, "A unidade")
+    unidade.ativa = False
+    db.commit()
+    return unidade
+
+
+def desativar_profissional(db: Session, profissional_id: int) -> Profissional:
+    profissional = obter(db, Profissional, profissional_id, "Profissional")
+    pendentes = _pendentes(db, "profissional_id", profissional_id)
+    if pendentes:
+        raise _conflito_pendentes(pendentes, "O profissional")
+    profissional.ativo = False
+    db.commit()
+    return profissional

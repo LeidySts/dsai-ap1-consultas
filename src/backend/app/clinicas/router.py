@@ -105,3 +105,13 @@ def detalhar_profissional(profissional_id: int, db: Session = Depends(get_db)):
 def editar_profissional(profissional_id: int, dados: ProfissionalEdicao, db: Session = Depends(get_db)):
     return service.editar_profissional(db, profissional_id, dados)
 
+
+
+@router.post("/unidades/{unidade_id}/desativar", response_model=UnidadeOut, dependencies=[Depends(so_admin)])
+def desativar_unidade(unidade_id: int, db: Session = Depends(get_db)):
+    return service.desativar_unidade(db, unidade_id)
+
+
+@router.post("/profissionais/{profissional_id}/desativar", response_model=ProfissionalOut, dependencies=[Depends(so_admin)])
+def desativar_profissional(profissional_id: int, db: Session = Depends(get_db)):
+    return service.desativar_profissional(db, profissional_id)
