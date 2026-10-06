@@ -149,6 +149,16 @@ def test_recepcao_marca_em_nome_de_paciente(client, db, c):
     assert marcar(client, c, f"{SEG} 10:00", usuario=c["recepcao"]).status_code == 422  # sem paciente
 
 
+def test_recepcao_busca_pacientes_por_nome_ou_cpf(client, db, c):
+    c["paciente"].cpf = "52998224725"
+    db.add(c["paciente"])
+    db.commit()
+    cab = auth(c["recepcao"])
+    assert [p["id"] for p in client.get("/api/pacientes?q=maria", headers=cab).json()] == [c["paciente"].id]
+    assert [p["id"] for p in client.get("/api/pacientes?q=982.247", headers=cab).json()] == [c["paciente"].id]
+    assert client.get("/api/pacientes?q=maria", headers=auth(c["paciente"])).status_code == 403
+
+
 def test_profissional_nao_marca(client, db, c):
     assert marcar(client, c, f"{SEG} 09:00", usuario=criar_usuario(db, "profissional")).status_code == 403
 
