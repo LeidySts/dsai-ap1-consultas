@@ -1,0 +1,45 @@
+{
+  "senha_demo": "demo1234",
+  "usuarios_demo": [
+    {"perfil": "paciente", "nome": "Paula Demonstração", "email": "paciente@demo.com"},
+    {"perfil": "profissional", "nome": "Dr. Marcos Demonstração", "email": "medico@demo.com"},
+    {"perfil": "recepcao", "nome": "Renata Recepção", "email": "recepcao@demo.com"},
+    {"perfil": "admin", "nome": "Ana Administradora", "email": "admin@demo.com"}
+  ],
+  "unidades": [
+    {"nome": "Unidade Centro", "endereco": "Av. Presidente Vargas, 500 - Campina, Belém/PA", "cep": "66017000", "telefone": "9132101000", "abertura": "07:00", "fechamento": "21:00", "dias_funcionamento": [0, 1, 2, 3, 4, 5]},
+    {"nome": "Unidade Nazaré", "endereco": "Av. Nazaré, 1200 - Nazaré, Belém/PA", "cep": "66035170", "telefone": "9132102000", "abertura": "07:00", "fechamento": "21:00", "dias_funcionamento": [0, 1, 2, 3, 4]},
+    {"nome": "Unidade Marambaia", "endereco": "Rod. Augusto Montenegro, 3000 - Marambaia, Belém/PA", "cep": "66615005", "telefone": "9132103000", "abertura": "07:00", "fechamento": "19:00", "dias_funcionamento": [0, 1, 2, 3, 4, 5]}
+  ],
+  "especialidades": [
+    {"nome": "Cardiologia", "tipos": [["Consulta", 30, 28000], ["Primeira consulta", 45, 35000]]},
+    {"nome": "Clínica Geral", "tipos": [["Consulta", 20, 15000], ["Check-up", 40, 22000]]},
+    {"nome": "Dermatologia", "tipos": [["Consulta", 30, 25000]]},
+    {"nome": "Endocrinologia", "tipos": [["Consulta", 30, 26000]]},
+    {"nome": "Ginecologia", "tipos": [["Consulta", 30, 24000], ["Preventivo", 40, 30000]]},
+    {"nome": "Neurologia", "tipos": [["Consulta", 40, 32000]]},
+    {"nome": "Oftalmologia", "tipos": [["Consulta", 30, 22000]]},
+    {"nome": "Ortopedia", "tipos": [["Consulta", 30, 26000], ["Retorno", 15, 0]]},
+    {"nome": "Otorrinolaringologia", "tipos": [["Consulta", 30, 24000]]},
+    {"nome": "Pediatria", "tipos": [["Consulta", 30, 20000], ["Puericultura", 45, 25000]]},
+    {"nome": "Psiquiatria", "tipos": [["Consulta", 50, 35000]]},
+    {"nome": "Urologia", "tipos": [["Consulta", 30, 25000]]}
+  ],
+  "nomes": ["Ana", "Bruno", "Carla", "Daniel", "Eduarda", "Fábio", "Gabriela", "Henrique", "Isabela", "João", "Karina", "Lucas", "Mariana", "Nicolas", "Olívia", "Pedro", "Quésia", "Rafael", "Sofia", "Tiago", "Úrsula", "Vinícius", "Wesley", "Yasmin", "Zélia", "Antônio", "Beatriz", "Caio", "Débora", "Érico"],
+  "sobrenomes": ["Silva", "Santos", "Oliveira", "Souza", "Lima", "Pereira", "Costa", "Rodrigues", "Almeida", "Nascimento", "Araújo", "Carvalho", "Gomes", "Martins", "Rocha", "Barbosa", "Cardoso", "Teixeira", "Correa", "Pinheiro", "Monteiro", "Brandão", "Leão", "Corrêa"],
+  "biografias": [
+    "Atende adultos e idosos, com foco em prevenção.",
+    "Experiência de mais de 10 anos em hospitais da região.",
+    "Atendimento humanizado e explicações sem pressa.",
+    "Especialista com residência em hospital universitário.",
+    "Acompanha pacientes com doenças crônicas."
+  ],
+  "feriados_nacionais": [
+    ["2026-10-12", "Nossa Senhora Aparecida"],
+    ["2026-11-02", "Finados"],
+    ["2026-11-15", "Proclamação da República"],
+    ["2026-11-20", "Dia da Consciência Negra"],
+    ["2026-12-25", "Natal"],
+    ["2027-01-01", "Confraternização Universal"]
+  ]
+}
