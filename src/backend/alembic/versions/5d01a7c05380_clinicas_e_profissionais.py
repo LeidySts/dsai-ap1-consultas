@@ -65,7 +65,7 @@ def upgrade() -> None:
     sa.Column('nome', sa.String(length=80), nullable=False),
     sa.Column('duracao_min', sa.Integer(), nullable=False),
     sa.Column('preco_centavos', sa.Integer(), nullable=False),
-    sa.CheckConstraint('duracao_min BETWEEN 15 AND 120 AND duracao_min %% 5 = 0', name='ck_tipos_duracao'),
+    sa.CheckConstraint('duracao_min BETWEEN 15 AND 120 AND duracao_min % 5 = 0', name='ck_tipos_duracao'),
     sa.CheckConstraint('preco_centavos >= 0', name='ck_tipos_preco'),
     sa.ForeignKeyConstraint(['especialidade_id'], ['especialidades.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
