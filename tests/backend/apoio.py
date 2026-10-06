@@ -72,3 +72,41 @@ def criar_profissional(db, nome="Dr. João Souza", especialidades=(), unidades=(
     db.add(profissional)
     db.commit()
     return profissional
+
+
+def local(texto: str):
+    """'2026-10-12 08:00' no fuso de São Paulo -> datetime com fuso."""
+    from datetime import datetime
+
+    from app.core.tempo import FUSO_LOCAL
+
+    return datetime.fromisoformat(texto).replace(tzinfo=FUSO_LOCAL)
+
+
+def criar_faixa(db, profissional, unidade, dia_semana=0, inicio="08:00", fim="12:00"):
+    from datetime import time
+
+    from app.agenda.models import GradeHorario
+
+    faixa = GradeHorario(
+        profissional_id=profissional.id, unidade_id=unidade.id, dia_semana=dia_semana,
+        hora_inicio=time.fromisoformat(inicio), hora_fim=time.fromisoformat(fim),
+    )
+    db.add(faixa)
+    db.commit()
+    return faixa
+
+
+def criar_consulta(db, paciente, profissional, unidade, tipo, inicio, status="marcada", criado_por=None):
+    from datetime import timedelta
+
+    from app.agendamento.models import Consulta
+
+    consulta = Consulta(
+        paciente_id=paciente.id, profissional_id=profissional.id, unidade_id=unidade.id, tipo_consulta_id=tipo.id,
+        inicio=inicio, fim=inicio + timedelta(minutes=tipo.duracao_min), status=status,
+        preco_centavos=tipo.preco_centavos, criado_por_id=(criado_por or paciente).id,
+    )
+    db.add(consulta)
+    db.commit()
+    return consulta
