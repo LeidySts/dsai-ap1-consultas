@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import FileResponse, JSONResponse
 
 from app.agenda.router import publico as agenda_publico
 from app.agenda.router import router as agenda_router
@@ -18,13 +21,31 @@ ROUTERS = (
     busca_router,
     agendamento_router,
 )
+# build do frontend copiado pelo Dockerfile
+PASTA_ESTATICOS = Path(__file__).parent / "static"
 
 
-def criar_app() -> FastAPI:
+def servir_frontend(app: FastAPI, pasta: Path) -> None:
+    """Serve o build do React; qualquer rota fora de /api cai no index.html (SPA)."""
+    raiz = pasta.resolve()
+
+    @app.get("/{caminho:path}", include_in_schema=False)
+    def frontend(caminho: str):
+        if caminho == "api" or caminho.startswith("api/"):
+            return JSONResponse(status_code=404, content={"detail": "Rota não encontrada."})
+        arquivo = (raiz / caminho).resolve()
+        if caminho and arquivo.is_file() and arquivo.is_relative_to(raiz):
+            return FileResponse(arquivo)
+        return FileResponse(raiz / "index.html")
+
+
+def criar_app(pasta_estaticos: Path = PASTA_ESTATICOS) -> FastAPI:
     app = FastAPI(title="MarcaConsulta")
     app.add_exception_handler(ErroDominio, tratar_erro_dominio)
     for router in ROUTERS:
         app.include_router(router, prefix="/api")
+    if (pasta_estaticos / "index.html").is_file():
+        servir_frontend(app, pasta_estaticos)
     return app
 
 

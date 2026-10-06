@@ -35,8 +35,11 @@ def gerar_cpf(rng: random.Random) -> str:
     return "".join(map(str, base))
 
 
-def _nome(rng: random.Random, dados: dict) -> str:
-    return f"{rng.choice(dados['nomes'])} {rng.choice(dados['sobrenomes'])} {rng.choice(dados['sobrenomes'])}"
+def _nome(rng: random.Random, dados: dict, feminino: bool | None = None) -> str:
+    if feminino is None:
+        feminino = rng.random() < 0.5
+    primeiro = rng.choice(dados["nomes_femininos" if feminino else "nomes_masculinos"])
+    return " ".join([primeiro, *rng.sample(dados["sobrenomes"], 2)])
 
 
 def _criar_cadastros(db: Session, dados: dict, rng: random.Random):
@@ -94,7 +97,8 @@ def _criar_profissionais(db: Session, dados: dict, rng: random.Random, unidades,
         if i == 0:
             nome, esps, unis = medico_demo.nome, especialidades[:2], unidades[:2]
         else:
-            nome = ("Dr. " if rng.random() < 0.5 else "Dra. ") + _nome(rng, dados)
+            feminino = rng.random() < 0.5
+            nome = ("Dra. " if feminino else "Dr. ") + _nome(rng, dados, feminino)
             # garante ao menos 4 profissionais por especialidade
             esps = [especialidades[i % len(especialidades)]]
             if rng.random() < 0.25:

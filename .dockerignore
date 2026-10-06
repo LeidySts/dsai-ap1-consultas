@@ -1,0 +1,10 @@
+.git
+.claude
+.env
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+src/frontend/dist
+src/backend/app/static
+tests
+prompts

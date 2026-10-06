@@ -25,3 +25,6 @@ coverage/
 .DS_Store
 .idea/
 .vscode/
+
+# build do frontend copiado para o backend (Docker)
+src/backend/app/static/
