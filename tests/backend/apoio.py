@@ -30,3 +30,45 @@ def criar_usuario(db, perfil="paciente", email=None, nome="Fulano de Tal", cpf=N
 
 def auth(usuario: Usuario) -> dict[str, str]:
     return {"Authorization": f"Bearer {criar_access_token(usuario.id, usuario.perfil)}"}
+
+
+def criar_unidade(db, nome="Unidade Centro", abertura="07:00", fechamento="19:00", dias=(0, 1, 2, 3, 4, 5)):
+    from datetime import time
+
+    from app.clinicas.models import Unidade
+    from app.core.texto import normalizar
+
+    unidade = Unidade(
+        nome=nome, nome_busca=normalizar(nome), endereco="Rua A, 100", cep="66000000", telefone="9132220000",
+        abertura=time.fromisoformat(abertura), fechamento=time.fromisoformat(fechamento),
+        dias_funcionamento=list(dias),
+    )
+    db.add(unidade)
+    db.commit()
+    return unidade
+
+
+def criar_especialidade(db, nome="Cardiologia", tipos=(("Consulta", 30, 25000),)):
+    from app.clinicas.models import Especialidade, TipoConsulta
+    from app.core.texto import normalizar
+
+    especialidade = Especialidade(nome=nome, nome_busca=normalizar(nome))
+    especialidade.tipos = [TipoConsulta(nome=n, duracao_min=d, preco_centavos=p) for n, d, p in tipos]
+    db.add(especialidade)
+    db.commit()
+    return especialidade
+
+
+def criar_profissional(db, nome="Dr. João Souza", especialidades=(), unidades=(), numero=None, usuario=None):
+    from app.clinicas.models import Profissional
+    from app.core.texto import normalizar
+
+    total = db.query(Profissional).count()
+    profissional = Profissional(
+        nome=nome, nome_busca=normalizar(nome), conselho="CRM", registro_numero=numero or str(10000 + total),
+        registro_uf="PA", biografia="Atende adultos.", especialidades=list(especialidades), unidades=list(unidades),
+        usuario_id=usuario.id if usuario else None,
+    )
+    db.add(profissional)
+    db.commit()
+    return profissional
