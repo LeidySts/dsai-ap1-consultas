@@ -28,3 +28,7 @@ coverage/
 
 # build do frontend copiado para o backend (Docker)
 src/backend/app/static/
+
+# claude code: só o settings.json do projeto é versionado
+.claude/worktrees/
+.claude/settings.local.json

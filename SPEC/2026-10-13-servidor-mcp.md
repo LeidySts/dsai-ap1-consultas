@@ -7,7 +7,7 @@ listar, marcar e cancelar consultas. Ele não acessa o banco: fala apenas com a 
 `https://marcaconsulta.onrender.com/api`, respeitando as mesmas regras que a interface web.
 
 ## Critérios de aceitação
-- O servidor fica em `mcp/servidor.py`, usa o SDK oficial `mcp` (FastMCP, transporte stdio) e
+- O servidor fica em `mcp/servidor.py`, usa o SDK oficial `mcp` 2.x (`MCPServer`, transporte stdio) e
   `httpx`; as dependências ficam em `mcp/requirements.txt`.
 - Configuração só por variáveis de ambiente:
   - `MARCACONSULTA_EMAIL` e `MARCACONSULTA_SENHA` — login do paciente de demonstração (obrigatórias

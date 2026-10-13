@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "marcaconsulta": {
+      "command": "python",
+      "args": ["mcp/servidor.py"],
+      "env": {
+        "MARCACONSULTA_API_URL": "${MARCACONSULTA_API_URL:-https://marcaconsulta.onrender.com/api}",
+        "MARCACONSULTA_EMAIL": "${MARCACONSULTA_EMAIL}",
+        "MARCACONSULTA_SENHA": "${MARCACONSULTA_SENHA}"
+      }
+    }
+  }
+}

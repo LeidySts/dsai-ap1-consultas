@@ -1,0 +1,14 @@
+{
+  "enabledMcpjsonServers": ["marcaconsulta"],
+  "permissions": {
+    "allow": [
+      "mcp__marcaconsulta__buscar_profissionais",
+      "mcp__marcaconsulta__ver_horarios_livres",
+      "mcp__marcaconsulta__listar_minhas_consultas"
+    ],
+    "ask": [
+      "mcp__marcaconsulta__marcar_consulta",
+      "mcp__marcaconsulta__cancelar_consulta"
+    ]
+  }
+}
