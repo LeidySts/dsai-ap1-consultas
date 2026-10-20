@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AgendaProfissional from "@/features/agenda/AgendaProfissional";
 import Disponibilidade from "@/features/agenda/Disponibilidade";
@@ -32,9 +32,7 @@ test("agenda semanal busca a semana inteira e colore por status", async () => {
   );
   renderizar(<AgendaProfissional />);
   await userEvent.click(await screen.findByRole("tab", { name: "Semana" }));
-  const data = screen.getByLabelText("Data");
-  await userEvent.clear(data);
-  await userEvent.type(data, "2026-10-08");
+  fireEvent.change(screen.getByLabelText("Data"), { target: { value: "2026-10-08" } });
   const quarta = await screen.findByRole("region", { name: "2026-10-07" });
   expect(await within(quarta).findByText("Carlos")).toBeInTheDocument();
   expect(within(quarta).getByText("Confirmada")).toHaveClass("status-confirmada");
