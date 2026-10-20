@@ -1,0 +1,1 @@
+# Estado do loop — manter o CI verde
